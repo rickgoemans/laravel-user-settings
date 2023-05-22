@@ -25,7 +25,7 @@ class UserSettingFactory extends Factory
 
     public function forUser(Model $user): self
     {
-        return $this->state(function(array $attributes) use ($user): array {
+        return $this->state(function (array $attributes) use ($user): array {
             return [
                 'user_id' => $user->getKey(),
             ];
