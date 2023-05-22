@@ -16,9 +16,9 @@ class UserSettingFactory extends Factory
     public function definition(): array
     {
         return [
+            'type'  => fake()->randomElement(UserSettingType::cases()),
             'group' => fake()->word,
             'key'   => fake()->word,
-            'type'  => fake()->randomElement(UserSettingType::cases()),
             'value' => null,
         ];
     }

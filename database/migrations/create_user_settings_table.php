@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('user_settings', function (Blueprint $table) {
+        Schema::create('user_settings', function(Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
                 ->references('id')
@@ -16,6 +16,7 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table->string('type');
+            $table->string('group');
             $table->string('key');
             $table->longText('value')
                 ->nullable();

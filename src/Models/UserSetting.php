@@ -28,8 +28,7 @@ class UserSetting extends Model
 
     /** {@inheritdoc} */
     protected $casts = [
-        //        'key'     => UserSettingKey::class,
-        'type' => UserSettingType::class,
+        'type'  => UserSettingType::class,
         'value' => DynamicSettingValueCaster::class,
     ];
 
