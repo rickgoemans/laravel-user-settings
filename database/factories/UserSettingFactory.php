@@ -17,15 +17,15 @@ class UserSettingFactory extends Factory
     {
         return [
             'group' => fake()->word,
-            'key'   => fake()->word,
-            'type'  => fake()->randomElement(UserSettingType::cases()),
+            'key' => fake()->word,
+            'type' => fake()->randomElement(UserSettingType::cases()),
             'value' => null,
         ];
     }
 
     public function forUser(Model $user): self
     {
-        return $this->state(function(array $attributes) use ($user): array {
+        return $this->state(function (array $attributes) use ($user): array {
             return [
                 'user_id' => $user->getKey(),
             ];
