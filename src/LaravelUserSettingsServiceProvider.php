@@ -19,7 +19,7 @@ class LaravelUserSettingsServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-user-settings')
             ->hasConfigFile()
-            ->hasMigration('create_laravel-user-settings_table')
+            ->hasMigration('create_user_settings_table')
             ->hasCommand(LaravelUserSettingsCommand::class);
     }
 
