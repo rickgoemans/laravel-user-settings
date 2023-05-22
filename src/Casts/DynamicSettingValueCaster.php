@@ -24,14 +24,14 @@ class DynamicSettingValueCaster implements CastsAttributes
 
         if ($setting) {
             $value = match ($setting->type) {
-                UserSettingType::Array   => json_decode($value, true),
-                UserSettingType::Boolean => !!$value,
-                UserSettingType::Date    => Carbon::parse($value),
-                UserSettingType::Text    => $value
+                UserSettingType::Array => json_decode($value, true),
+                UserSettingType::Boolean => (bool) $value,
+                UserSettingType::Date => Carbon::parse($value),
+                UserSettingType::Text => $value
             };
         }
 
-        return !is_null($value)
+        return ! is_null($value)
             ? $value
             : $setting->default;
     }
@@ -43,10 +43,10 @@ class DynamicSettingValueCaster implements CastsAttributes
         $setting = $this->userSettingService->get($attributes['group'], $key);
 
         return match ($setting->type) {
-            UserSettingType::Array   => json_encode($value),
-            UserSettingType::Boolean => !!$value,
-            UserSettingType::Date    => Carbon::parse($value),
-            UserSettingType::Text    => $value
+            UserSettingType::Array => json_encode($value),
+            UserSettingType::Boolean => (bool) $value,
+            UserSettingType::Date => Carbon::parse($value),
+            UserSettingType::Text => $value
         };
     }
 }

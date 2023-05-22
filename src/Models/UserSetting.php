@@ -17,7 +17,7 @@ class UserSetting extends Model
     use HasFactory;
     use WithData;
 
-    /** {{@inheritdoc}} */
+    /** {@inheritdoc} */
     protected $fillable = [
         'user_id',
         'type',
@@ -26,10 +26,10 @@ class UserSetting extends Model
         'value',
     ];
 
-    /** {{@inheritdoc}} */
+    /** {@inheritdoc} */
     protected $casts = [
-//        'key'     => UserSettingKey::class,
-        'type'  => UserSettingType::class,
+        //        'key'     => UserSettingKey::class,
+        'type' => UserSettingType::class,
         'value' => DynamicSettingValueCaster::class,
     ];
 
@@ -37,7 +37,6 @@ class UserSetting extends Model
 
     /**
      * {@inheritdoc}
-     * @return UserSettingQueryBuilder
      */
     public function newEloquentBuilder($query): UserSettingQueryBuilder
     {
@@ -46,7 +45,6 @@ class UserSetting extends Model
 
     /**
      * {@inheritdoc}
-     * @return UserSettingFactory
      */
     public static function newFactory(): UserSettingFactory
     {
@@ -55,7 +53,6 @@ class UserSetting extends Model
 
     /**
      * {@inheritdoc}
-     * @return UserSettingCollection
      */
     public function newCollection(array $models = []): UserSettingCollection
     {
