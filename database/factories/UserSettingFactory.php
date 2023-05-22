@@ -4,7 +4,7 @@ namespace Rickgoemans\LaravelUserSettings\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
-use OutSmart\Core\Domain\Settings\Enums\UserSettingType;
+use Rickgoemans\LaravelUserSettings\Enums\UserSettingType;
 use Rickgoemans\LaravelUserSettings\Models\UserSetting;
 
 /** @extends Factory<UserSetting> */
@@ -16,9 +16,9 @@ class UserSettingFactory extends Factory
     public function definition(): array
     {
         return [
+            'type'  => fake()->randomElement(UserSettingType::cases()),
             'group' => fake()->word,
-            'key' => fake()->word,
-            'type' => fake()->randomElement(UserSettingType::cases()),
+            'key'   => fake()->word,
             'value' => null,
         ];
     }
