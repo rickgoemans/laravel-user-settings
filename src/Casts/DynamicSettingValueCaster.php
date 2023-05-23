@@ -17,36 +17,34 @@ class DynamicSettingValueCaster implements CastsAttributes
     }
 
     /** {@inheritdoc} */
-    public function get($model, string $key, $value, array $attributes)
+    public function get($model, string $key, $value, array $attributes): mixed
     {
         $key = $attributes['key'];
         $setting = $this->userSettingService->get($attributes['group'], $key);
 
         if ($setting) {
             $value = match ($setting->type) {
-                UserSettingType::Array => json_decode($value, true),
-                UserSettingType::Boolean => (bool) $value,
-                UserSettingType::Date => Carbon::parse($value),
-                UserSettingType::Text => $value
+                UserSettingType::Array   => json_decode($value, true),
+                UserSettingType::Boolean => (bool)$value,
+                UserSettingType::Date    => Carbon::parse($value),
+                UserSettingType::Text    => $value
             };
         }
 
-        return ! is_null($value)
-            ? $value
-            : $setting->default;
+        return $value;
     }
 
     /** {@inheritdoc} */
-    public function set($model, string $key, $value, array $attributes)
+    public function set($model, string $key, $value, array $attributes): mixed
     {
         $key = $attributes['key'];
         $setting = $this->userSettingService->get($attributes['group'], $key);
 
         return match ($setting->type) {
-            UserSettingType::Array => json_encode($value),
-            UserSettingType::Boolean => (bool) $value,
-            UserSettingType::Date => Carbon::parse($value),
-            UserSettingType::Text => $value
+            UserSettingType::Array   => json_encode($value),
+            UserSettingType::Boolean => (bool)$value,
+            UserSettingType::Date    => Carbon::parse($value),
+            UserSettingType::Text    => $value
         };
     }
 }
