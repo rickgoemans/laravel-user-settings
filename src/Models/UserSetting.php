@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Rickgoemans\LaravelUserSettings\Casts\DynamicSettingValueCaster;
 use Rickgoemans\LaravelUserSettings\Collections\UserSettingCollection;
+use Rickgoemans\LaravelUserSettings\Concerns\ScopesUser;
 use Rickgoemans\LaravelUserSettings\Database\Factories\UserSettingFactory;
 use Rickgoemans\LaravelUserSettings\DataTransferObjects\UserSettingData;
 use Rickgoemans\LaravelUserSettings\Enums\UserSettingType;
@@ -15,6 +16,7 @@ use Spatie\LaravelData\WithData;
 class UserSetting extends Model
 {
     use HasFactory;
+    use ScopesUser;
     use WithData;
 
     /** {@inheritdoc} */
@@ -28,7 +30,7 @@ class UserSetting extends Model
 
     /** {@inheritdoc} */
     protected $casts = [
-        'type' => UserSettingType::class,
+        'type'  => UserSettingType::class,
         'value' => DynamicSettingValueCaster::class,
     ];
 
