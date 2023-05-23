@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 trait ScopesUser
 {
-    public function bootScopesUser(): void
+    public static function bootScopesUser(): void
     {
         $user = Auth::user();
 
