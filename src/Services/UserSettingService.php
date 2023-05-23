@@ -50,7 +50,7 @@ class UserSettingService
             'group' => $group,
             'key' => $key,
         ], [
-            ...$setting->all(),
+            ...$setting->except('created_at', 'updated_at')->all(),
             'value' => $payload,
         ]);
     }
@@ -74,7 +74,7 @@ class UserSettingService
                         && $setting->key == $data->key);
 
                     if (! $dbSetting) {
-                        UserSetting::create($data->all());
+                        UserSetting::create($data->except('created_at', 'updated_at')->all());
                     }
                 });
         });
