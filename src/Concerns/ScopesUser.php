@@ -12,16 +12,16 @@ trait ScopesUser
     {
         $user = Auth::user();
 
-        static::addGlobalScope('scopes-user', function(Builder $query) use ($user) {
-            if (!$user instanceof Model) {
+        static::addGlobalScope('scopes-user', function (Builder $query) use ($user) {
+            if (! $user instanceof Model) {
                 return;
             }
 
             $query->where('user_id', $user->getKey());
         });
 
-        static::saving(function(Model $model) use ($user) {
-            if (!$user instanceof Model) {
+        static::saving(function (Model $model) use ($user) {
+            if (! $user instanceof Model) {
                 return;
             }
 
