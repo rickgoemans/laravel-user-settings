@@ -10,14 +10,13 @@ class UserSettingData extends Data
 {
     public function __construct(
         public UserSettingType $type,
-        public string          $group,
-        public string          $key,
-        public mixed           $value = null,
-        public ?int            $user_id = null,
-        public ?Carbon         $created_at = null,
-        public ?Carbon         $updated_at = null,
-    )
-    {
+        public string $group,
+        public string $key,
+        public mixed $value = null,
+        public ?int $user_id = null,
+        public ?Carbon $created_at = null,
+        public ?Carbon $updated_at = null,
+    ) {
 
     }
 }
