@@ -27,20 +27,20 @@ class DynamicSettingValueCaster implements CastsAttributes
         $key = $attributes['key'];
         $setting = $this->userSettingService->get($attributes['group'], $key);
 
-        if (! $setting) {
+        if (!$setting) {
             throw new Exception('Invalid setting');
         }
 
         if ($value === null) {
-            return $setting->default;
+            return $setting->defaultValue;
         }
 
         return match ($setting->type) {
-            UserSettingType::Array => json_decode($value, true),
-            UserSettingType::Boolean => (bool) $value,
-            UserSettingType::Date => Carbon::parse($value),
-            UserSettingType::Text => $value,
-            default => throw new Exception("Invalid setting type {$setting->type}"),
+            UserSettingType::Array   => json_decode($value, true),
+            UserSettingType::Boolean => (bool)$value,
+            UserSettingType::Date    => Carbon::parse($value),
+            UserSettingType::Text    => $value,
+            default                  => throw new Exception("Invalid setting type {$setting->type}"),
         };
     }
 
@@ -55,10 +55,10 @@ class DynamicSettingValueCaster implements CastsAttributes
         $setting = $this->userSettingService->get($attributes['group'], $key);
 
         return match ($setting->type) {
-            UserSettingType::Array => json_encode($value),
-            UserSettingType::Boolean => (bool) $value,
-            UserSettingType::Date => Carbon::parse($value),
-            UserSettingType::Text => $value
+            UserSettingType::Array   => json_encode($value),
+            UserSettingType::Boolean => (bool)$value,
+            UserSettingType::Date    => Carbon::parse($value),
+            UserSettingType::Text    => $value
         };
     }
 }
