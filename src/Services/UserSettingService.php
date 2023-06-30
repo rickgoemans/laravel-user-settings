@@ -34,7 +34,7 @@ class UserSettingService
     public function get(string $group, string $key): ?UserSettingData
     {
         return $this->registeredSettings
-            ->first(fn(UserSettingData $data) => $data->group === $group
+            ->first(fn (UserSettingData $data) => $data->group === $group
                 && $data->key === $key);
     }
 
@@ -42,13 +42,13 @@ class UserSettingService
     {
         $setting = $this->get($group, $key);
 
-        if (!$setting) {
+        if (! $setting) {
             return null;
         }
 
         return UserSetting::updateOrCreate([
             'group' => $group,
-            'key'   => $key,
+            'key' => $key,
         ], [
             ...$setting->except('created_at', 'updated_at')->all(),
             'value' => $payload,
@@ -59,21 +59,21 @@ class UserSettingService
     {
         $user = Auth::user();
 
-        if (!$user instanceof Model) {
+        if (! $user instanceof Model) {
             return;
         }
 
-        Cache::remember("user-settings.{$user->getKey()}", 60 * 60, function() use ($user) {
+        Cache::remember("user-settings.{$user->getKey()}", 60 * 60, function () use ($user) {
             $userSettings = UserSetting::query()
                 ->forUser($user->getKey())
                 ->get();
 
             $this->registeredSettings
-                ->each(function(UserSettingData $data) use ($userSettings) {
-                    $dbSetting = $userSettings->first(fn(UserSetting $setting) => $setting->group == $data->group
+                ->each(function (UserSettingData $data) use ($userSettings) {
+                    $dbSetting = $userSettings->first(fn (UserSetting $setting) => $setting->group == $data->group
                         && $setting->key == $data->key);
 
-                    if (!$dbSetting) {
+                    if (! $dbSetting) {
                         UserSetting::create($data->except('defaultValue', 'created_at', 'updated_at')->all());
                     }
                 });
