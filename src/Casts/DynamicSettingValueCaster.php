@@ -32,7 +32,7 @@ class DynamicSettingValueCaster implements CastsAttributes
         }
 
         if ($value === null) {
-            return $setting->default;
+            return $setting->defaultValue;
         }
 
         return match ($setting->type) {

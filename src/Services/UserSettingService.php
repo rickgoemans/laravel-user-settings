@@ -74,7 +74,7 @@ class UserSettingService
                         && $setting->key == $data->key);
 
                     if (! $dbSetting) {
-                        UserSetting::create($data->except('created_at', 'updated_at')->all());
+                        UserSetting::create($data->except('defaultValue', 'created_at', 'updated_at')->all());
                     }
                 });
         });
