@@ -40,7 +40,6 @@ class DynamicSettingValueCaster implements CastsAttributes
             UserSettingType::Boolean => (bool) $value,
             UserSettingType::Date => Carbon::parse($value),
             UserSettingType::Text => $value,
-            default => throw new Exception("Invalid setting type {$setting->type}"),
         };
     }
 
