@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Rickgoemans\LaravelUserSettings\Collections\UserSettingCollection;
 use Rickgoemans\LaravelUserSettings\DataTransferObjects\UserSettingData;
 use Rickgoemans\LaravelUserSettings\Models\UserSetting;
 
@@ -46,13 +47,16 @@ class UserSettingService
             return null;
         }
 
-        return UserSetting::updateOrCreate([
+        /** @var UserSetting $userSetting */
+        $userSetting = UserSetting::updateOrCreate([
             'group' => $group,
             'key' => $key,
         ], [
             ...$setting->except('created_at', 'updated_at')->all(),
             'value' => $payload,
         ]);
+
+        return $userSetting;
     }
 
     public function migrate(): void
@@ -64,17 +68,18 @@ class UserSettingService
         }
 
         Cache::remember("user-settings.{$user->getKey()}", 60 * 60, function () use ($user) {
+            /** @var UserSettingCollection $userSettings */
             $userSettings = UserSetting::query()
                 ->forUser($user->getKey())
                 ->get();
 
             $this->registeredSettings
                 ->each(function (UserSettingData $data) use ($userSettings) {
-                    $dbSetting = $userSettings->first(fn (UserSetting $setting) => $setting->group == $data->group
-                        && $setting->key == $data->key);
-
+                    $dbSetting = $userSettings->first(fn (UserSetting $setting): bool => $setting->group === $data->group && $setting->key === $data->key); /** @phpstan-ignore-line */
                     if (! $dbSetting) {
-                        UserSetting::create($data->except('defaultValue', 'created_at', 'updated_at')->all());
+                        $userSetting = new UserSetting();
+                        $userSetting->fill($data->except('defaultValue', 'created_at', 'updated_at')->all());
+                        $userSetting->save();
                     }
                 });
         });

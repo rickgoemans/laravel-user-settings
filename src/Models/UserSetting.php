@@ -36,25 +36,19 @@ class UserSetting extends Model
 
     protected $dataClass = UserSettingData::class;
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function newEloquentBuilder($query): UserSettingQueryBuilder
     {
         return new UserSettingQueryBuilder($query);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public static function newFactory(): UserSettingFactory
     {
         return UserSettingFactory::new();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function newCollection(array $models = []): UserSettingCollection
     {
         return new UserSettingCollection($models);

@@ -2,7 +2,7 @@
 
 namespace Rickgoemans\LaravelUserSettings;
 
-use Rickgoemans\LaravelUserSettings\Commands\LaravelUserSettingsCommand;
+use Illuminate\Contracts\Foundation\Application;
 use Rickgoemans\LaravelUserSettings\Services\UserSettingService;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -18,15 +18,14 @@ class LaravelUserSettingsServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-user-settings')
-            ->hasConfigFile()
-            ->hasMigration('create_user_settings_table')
-            ->hasCommand(LaravelUserSettingsCommand::class);
+            ->hasConfigFile('user-settings')
+            ->hasMigration('create_user_settings_table');
     }
 
     public function registeringPackage(): void
     {
         parent::registeringPackage();
 
-        app()->singleton(UserSettingService::class, UserSettingService::class);
+        $this->app->singleton(UserSettingService::class, fn (Application $app): UserSettingService => new UserSettingService());
     }
 }

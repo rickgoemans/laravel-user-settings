@@ -20,12 +20,12 @@ trait ScopesUser
             $query->where('user_id', $user->getKey());
         });
 
-        static::saving(function (Model $model) use ($user) {
+        static::saving(function (Model $model) use ($user): void {
             if (! $user instanceof Model) {
                 return;
             }
 
-            $model->user_id = $user->getKey();
+            $model->user_id = $user->getKey(); /** @phpstan-ignore-line */
         });
     }
 }

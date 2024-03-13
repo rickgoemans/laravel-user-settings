@@ -12,6 +12,7 @@ class UserSettingData extends Data
         public UserSettingType $type,
         public string $group,
         public string $key,
+        public ?int $id = null,
         public ?int $user_id = null,
         public mixed $value = null,
         public mixed $defaultValue = null,
