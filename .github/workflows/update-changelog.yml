@@ -2,7 +2,7 @@ name: "Update Changelog"
 
 on:
   release:
-    types: [released]
+    types: [ released ]
 
 permissions:
   contents: write
@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: main
 
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
