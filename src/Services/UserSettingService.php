@@ -35,7 +35,7 @@ class UserSettingService
     public function get(string $group, string $key): ?UserSettingData
     {
         return $this->registeredSettings
-            ->first(fn (UserSettingData $data) => $data->group === $group
+            ->first(fn (UserSettingData $data): bool => $data->group === $group
                 && $data->key === $key);
     }
 
@@ -78,7 +78,7 @@ class UserSettingService
                     $dbSetting = $userSettings->first(fn (UserSetting $setting): bool => $setting->group === $data->group && $setting->key === $data->key); /** @phpstan-ignore-line */
                     if (! $dbSetting) {
                         $userSetting = new UserSetting();
-                        $userSetting->fill($data->except('defaultValue', 'created_at', 'updated_at')->all());
+                        $userSetting->fill($data->except('id', 'defaultValue', 'created_at', 'updated_at')->all());
                         $userSetting->save();
                     }
                 });
