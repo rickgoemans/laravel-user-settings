@@ -3,6 +3,7 @@
 namespace Rickgoemans\LaravelUserSettings\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\HasBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Rickgoemans\LaravelUserSettings\Casts\DynamicSettingValueCaster;
 use Rickgoemans\LaravelUserSettings\Collections\UserSettingCollection;
@@ -15,9 +16,16 @@ use Spatie\LaravelData\WithData;
 
 class UserSetting extends Model
 {
+    /** @use HasBuilder<UserSettingQueryBuilder<static>> */
+    use HasBuilder;
+
     use HasFactory;
     use ScopesUser;
+
+    /** @use WithData<UserSettingData> */
     use WithData;
+
+    protected static string $builder = UserSettingQueryBuilder::class;
 
     /** {@inheritdoc} */
     protected $fillable = [
@@ -35,12 +43,6 @@ class UserSetting extends Model
     ];
 
     protected $dataClass = UserSettingData::class;
-
-    /** {@inheritdoc} */
-    public function newEloquentBuilder($query): UserSettingQueryBuilder
-    {
-        return new UserSettingQueryBuilder($query);
-    }
 
     /** {@inheritdoc} */
     public static function newFactory(): UserSettingFactory
