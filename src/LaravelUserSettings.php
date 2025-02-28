@@ -2,6 +2,4 @@
 
 namespace Rickgoemans\LaravelUserSettings;
 
-class LaravelUserSettings
-{
-}
+class LaravelUserSettings {}

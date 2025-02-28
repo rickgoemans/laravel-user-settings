@@ -77,7 +77,7 @@ class UserSettingService
                 ->each(function (UserSettingData $data) use ($userSettings) {
                     $dbSetting = $userSettings->first(fn (UserSetting $setting): bool => $setting->group === $data->group && $setting->key === $data->key); /** @phpstan-ignore-line */
                     if (! $dbSetting) {
-                        $userSetting = new UserSetting();
+                        $userSetting = new UserSetting;
                         $userSetting->fill($data->except('id', 'defaultValue', 'created_at', 'updated_at')->all());
                         $userSetting->save();
                     }

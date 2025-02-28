@@ -18,7 +18,5 @@ class UserSettingData extends Data
         public mixed $defaultValue = null,
         public ?Carbon $created_at = null,
         public ?Carbon $updated_at = null,
-    ) {
-
-    }
+    ) {}
 }

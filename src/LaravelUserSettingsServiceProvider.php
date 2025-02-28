@@ -26,6 +26,6 @@ class LaravelUserSettingsServiceProvider extends PackageServiceProvider
     {
         parent::registeringPackage();
 
-        $this->app->singleton(UserSettingService::class, fn (Application $app): UserSettingService => new UserSettingService());
+        $this->app->singleton(UserSettingService::class, fn (Application $app): UserSettingService => new UserSettingService);
     }
 }
