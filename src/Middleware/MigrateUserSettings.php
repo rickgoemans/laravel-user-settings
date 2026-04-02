@@ -13,9 +13,9 @@ class MigrateUserSettings
     /** @param  Closure(Request): (Response)  $next */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()) {
+        if (Auth::check()) {
             /** @var UserSettingService $service */
-            $service = app(UserSettingService::class);
+            $service = resolve(UserSettingService::class);
 
             $service->migrate();
         }
